@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devyani Patil</title>
+    <!-- Using Inter for typography, falling back to system fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg-dark: #0d1117; 
+            --color-bg-card: #161b22; /* Card background */
+            --color-accent: #5eead4; /* Teal Accent */
+            --color-text-primary: #e5e7eb;
+            --color-text-secondary: #9ca3af;
+            --color-teal-button: #0d9488;
+            --color-border: #30363d;
+            --shadow-light: rgba(0, 0, 0, 0.5);
+            --shadow-heavy: rgba(0, 0, 0, 0.7);
+        }
+
+           /* Base Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            /* Using Inter font, falling back to system fonts */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            font-size: 1rem;
+            overflow-x: hidden; 
+        }
+
+           /* Utility Classes */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-padding {
+            padding: 6rem 0; 
+            border-top: 1px solid var(--color-border);
+        }
+
+        .section-heading {
+            font-size: clamp(2rem, 5vw, 3.5rem); /* Responsive font size */
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.05rem;
+        }
+
+        .accent-text {
+            color: var(--color-accent);
+        }
+
+        /* Header & Navigation*/
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-scrolled {
+            background-color: rgba(22, 27, 34, 0.95);
+            backdrop-filter: blur(8px); 
+            box-shadow: 0 4px 12px var(--shadow-heavy);
+        }
+
+        #header .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        #header .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        #header .logo:hover {
+            transform: scale(1.05);
+        }
+
+        #header .desktop-nav a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.2s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        /* Underline animation on hover */
+        #header .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        #header .desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        #header .desktop-nav a:hover {
+            color: var(--color-text-primary);
+        }
+
+        /* Mobile Menu Button & Menu */
+        .mobile-menu-button {
+            background: none;
+            border: none;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            display: none;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-button svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        #mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--color-bg-card);
+            border-top: 1px solid var(--color-border);
+            animation: fadeInDown 0.3s ease-out;
+        }
+
+        #mobile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        #mobile-menu a:hover {
+            background-color: #30363d;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section*/
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 5rem;
+            border-top: none;
+        }
+
+        #hero h1 {
+            font-size: clamp(3rem, 10vw, 5rem);
+            margin: 0;
+            line-height: 1.1;
+            background: linear-gradient(to right, #2dd4bf, #06b6d4);
+            -webkit-background-clip: text; /* for Chrome, Safari */
+            -webkit-text-fill-color: transparent; /* for Chrome, Safari */
+            background-clip: text; /* for Firefox (may need experimental flags) */
+            color: transparent; /* fallback */
+        }
+
+
+        #hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            margin: 1.5rem 0 2rem;
+        }
+
+        #hero .typing-text {
+            font-weight: 500;
+            color: var(--color-accent);
+        }
+
+        /* Typing Cursor Animation */
+        @keyframes blink-caret {
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: var(--color-accent);
+            }
+        }
+
+        .typing::after {
+            content: '|';
+            display: inline-block;
+            animation: blink-caret 0.75s step-end infinite;
+            margin-left: 2px;
+            font-weight: 300;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 0.9rem 2.2rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.02rem;
+        }
+
+        .button:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 20px var(--shadow-heavy);
+        }
+
+        .button-primary {
+            background-color: var(--color-accent);
+            color: var(--color-bg-dark);
+        }
+
+        .button-secondary {
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+        }
+
+        .button-secondary:hover {
+            background-color: #1f2937;
+            border-color: var(--color-accent);
+        }
+
+        /*  About Section*/
+        #about {
+            background-color: #0c1015; 
+        }
+
+        #about .content-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            text-align: center;
+        }
+
+        #about .profile-photo {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--color-accent);
+            box-shadow: 0 8px 20px var(--shadow-heavy);
+            transition: transform 0.3s ease;
+        }
+
+        #about .profile-photo:hover {
+            transform: translateY(-8px);
+        }
+
+        #about .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #about .bio {
+            max-width: 800px;
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+        }
+
+        #about .bio p {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Skills Section*/
+        #skills .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background-color: var(--color-bg-card);
+            padding: 2rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 20px var(--shadow-heavy);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-accent);
+            box-shadow: 0 15px 40px var(--shadow-heavy);
+        }
+
+        .skill-card svg {
+            width: 60px;
+            height: 60px;
+            stroke: var(--color-accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover svg {
+            transform: scale(1.1);
+        }
+
+        .skill-card .title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin: 0;
+        }
+
+        .skill-card .subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            margin: 0;
+        }
+
+        /* Projects Section */
+        #projects {
+            background-color: #0c1015;
+        }
+
+        #projects .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background-color: var(--color-bg-card);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 8px 30px var(--shadow-heavy);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow-heavy);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-card-content h3 {
+            font-size: 1.5rem;
+            color: var(--color-text-primary);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card-content .description {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Contact Section */
+        #contact .intro {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+        }
+
+        #contact-form {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--color-text-secondary);
+            opacity: 0.6;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.2);
+        }
+
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-bg-dark);
+            background-color: var(--color-accent);
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .submit-button:hover {
+            background-color: #4ed9c6;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow-heavy);
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-info p svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--color-accent);
+            fill: none;
+            stroke-width: 1.5;
+            margin-right: 0.5rem;
+        }
+
+        .contact-info p a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-info p a:hover {
+            color: #4ed9c6;
+            text-decoration: underline;
+        }
+
+        /* form submission feedback */
+        .message-box {
+            background-color: #1f2937;
+            border: 1px solid #4b5563;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /*  FOOTER */
+        footer {
+            border-top: 1px solid var(--color-border);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* MEDIA QUERIES FOR RESPONSIVENESS */
+
+        @media (min-width: 768px) {
+            #about .content-grid {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+                gap: 4rem;
+            }
+
+            #about .profile-photo {
+                flex-shrink: 0;
+            }
+
+            #skills .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Desktop (1024px and up) */
+        @media (min-width: 1024px) {
+            #skills .skills-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* Mobile Styles (max-width: 767px) */
+        @media (max-width: 767px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            #hero h1 {
+                font-size: 3.25rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER & NAVIGATION-->
+    <header id="header">
+        <div class="container nav-content">
+            <a href="#hero" class="logo">Devyani Patil</a>
+            <nav class="desktop-nav">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="mobile-menu-button">
+                <!-- Menu Icon SVG -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" style="display: none;">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <!--  1. Hero Section -->
+        <section id="hero" class="section-padding" style="border-top: none;">
+            <div class="container">
+                <p class="subtitle" style="margin-bottom: 0.75rem;">Hello, I'm</p>
+                <h1>Devyani Patil</h1>
+                <div class="subtitle">
+                    A passionate <span id="typing-text" class="typing typing-text"></span>
+                </div>
+                <div class="button-group">
+                    <a href="#contact" class="button button-primary">Get In Touch</a>
+                    <a href="Devyani_Patil_Resume.pdf" class="button button-secondary">View Resume (PDF)</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. About Section -->
+        <section id="about" class="section-padding">
+            <div class="container">
+                <h2 class="section-heading">About <span class="accent-text">Me</span></h2>
+                <div class="content-grid">
+                    <div class="profile-photo">
+                        <!-- Placeholder image with fallback -->
+                        <img src="Devyani_Profile_Photo.jpeg" alt="Alex Morgan Portrait" onerror="this.src='https://placehold.co/300x300/1e293b/a5b4fc?text=Your+Photo'">
+                    </div>
+                    <div class="bio">
+                        <p>
+                            Hi, I’m Devyani Patil, a passionate Computer Engineering student and aspiring Full-Stack Developer. I specialize in building modern, responsive, and user-friendly web applications using HTML, CSS, JavaScript for the frontend and Node.js, Express, and MongoDB for the backend.  
+                        </p>
+                        <p>
+                            Currently, I’m pursuing my Bachelor’s degree at Vishwakarma Institute of Technology, Pune. I’m deeply interested in web development, AI-powered applications, and solving real-world problems through technology.  
+                        </p>
+                        <p>
+                            Beyond coding, I enjoy exploring new tech trends, participating in hackathons, and constantly improving my problem-solving skills. My goal is to grow as a developer while contributing to impactful projects that make a difference.  
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--  3. Skills Section -->
+        <section id="skills" class="section-padding">
+            <div class="container">
+                <h2 class="section-heading"><span class="accent-text">Skills</span></h2>
+                <div class="skills-grid">
+                    <!-- 1. HTML (File Code Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><path d="M15 2H9a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3z"/><path d="M12 17l4-4-4-4"/></svg>
+                        <p class="title">HTML</p>
+                        <p class="subtitle">Markup & Structure</p>
+                    </div>
+                    <!-- 2. CSS (Feather Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><path d="M12 20h9M12 4h9M12 12h9M3 15h0.01M3 9h0.01M3 3h0.01"/></svg>
+                        <p class="title">CSS</p>
+                        <p class="subtitle">Styling & Design</p>
+                    </div>
+                    <!-- 3. JavaScript (Code Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        <p class="title">JavaScript</p>
+                        <p class="subtitle">Client-Side Logic</p>
+                    </div>
+                    <!-- 4. C (Circle/Dot Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                        <p class="title">C</p>
+                        <p class="subtitle">Systems Programming</p>
+                    </div>
+                    <!-- 5. Python (Snake/Path Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><path d="m8 3 4 8 5-5m0 16-5-5-4 8"/></svg>
+                        <p class="title">Python</p>
+                        <p class="subtitle">Backend & Scripting</p>
+                    </div>
+                    <!-- 6. CPP (Plus Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+                        <p class="title">C++</p>
+                        <p class="subtitle">High-Performance Code</p>
+                    </div>
+                    <!-- 7. SQL (Database Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/></svg>
+                        <p class="title">SQL</p>
+                        <p class="subtitle">Relational Databases</p>
+                    </div>
+                    <!-- 8. MongoDB (Target/Globe Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 5v5m0 4v5"/></svg>
+                        <p class="title">MongoDB</p>
+                        <p class="subtitle">NoSQL Databases</p>
+                    </div>
+                    <!-- 9. Node/Express (Server Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><rect width="20" height="10" x="2" y="7" rx="2" ry="2"/><line x1="6" x2="6" y1="12" y2="12"/><line x1="18" x2="18" y1="12" y2="12"/></svg>
+                        <p class="title">Node/Express</p>
+                        <p class="subtitle">Server-Side JavaScript</p>
+                    </div>
+                    <!-- 10. Git/GitHub (Git Branch Icon) -->
+                    <div class="skill-card">
+                        <svg viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 0-9 9"/></svg>
+                        <p class="title">Git/GitHub</p>
+                        <p class="subtitle">Version Control</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Projects Section-->
+        <section id="projects" class="section-padding">
+            <div class="container">
+                <h2 class="section-heading"><span class="accent-text">Projects</span></h2>
+
+                <div class="projects-grid">
+                    <!-- Project Card 1 -->
+                    <div class="project-card">
+                        <img src="FRA_Project.png" alt="Project 1 Mockup">
+                        <div class="project-card-content">
+                            <h3>🌳 FRA Atlas: AI-Powered WebGIS Prototype</h3>
+                            <p class="description">
+                                Developed an interactive WebGIS prototype for the Forest Rights Act (FRA) to map farmer claims with clear land boundaries, filters, and search functionality. The system also includes a rule-based decision support engine that recommends relevant government schemes based on claim type.
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="project-card">
+                        <img src="CyberSecurity_Project.jpeg" alt="Project 2 Mockup">
+                        <div class="project-card-content">
+                            <h3>Secret Code Breakers – Cipher Challenge Game</h3>
+                            <p class="description">
+                               An interactive web-based game that challenges users to decode encrypted messages using classical ciphers. Built with HTML, CSS, and JavaScript, featuring a timer, hints, and answer validation to make learning cryptography fun and engaging.                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--  5. Contact Section -->
+        <section id="contact" class="section-padding">
+            <div class="container">
+                <h2 class="section-heading">Let's <span class="accent-text">Connect</span></h2>
+                <p class="intro">I'm currently open to new opportunities. Send me a message, and I'll get back to you soon.</p>
+
+                <form id="contact-form" action="#">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Enter your message..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Send Message</button>
+                </form>
+
+                <!-- Contact Info Below Form -->
+                <div class="contact-info">
+                    <p>
+                        <!-- Mail Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.9 1.9 0 0 1-2.06 0L2 7"/></svg>
+                        <a href="mailto:devyani22006@gmail.com">devyani22006@gmail.com</a>
+                    </p>
+                    <p>
+                        <!-- LinkedIn Icon SVG -->
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                        <a href="https:www.linkedin.com/in/devyani-patil-226dp" target="_blank">linkedin.com/in/devyani-patil-226dp</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            &copy; 2025 All rights reserved.
+        </div>
+    </footer>
+
+
+    <script>
+        (function() {
+            // 1. Header Scroll Effect
+            const header = document.getElementById('header');
+
+            function handleScroll() {
+                if (window.scrollY > 50) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
+
+            // 2. Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+
+            function toggleMobileMenu() {
+                // Toggle display block/none
+                const isVisible = mobileMenu.style.display === 'block';
+                mobileMenu.style.display = isVisible ? 'none' : 'block';
+                // A better approach would be to toggle a CSS class for visibility/transition
+            }
+
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    // Close menu when a link is clicked
+                    mobileMenu.style.display = 'none';
+                });
+            });
+
+            // 3. Dynamic Typing Effect (for Hero Section)
+            const roles = ["Full Stack Developer", "Software Engineer"];
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let speed = 150; // Typing speed
+
+            const typingTextElement = document.getElementById('typing-text');
+
+            function typeEffect() {
+                const currentRole = roles[roleIndex];
+                
+                if (isDeleting) {
+                    typingTextElement.textContent = currentRole.substring(0, charIndex - 1);
+                    charIndex--;
+                    speed = 50; 
+                } else {
+                    typingTextElement.textContent = currentRole.substring(0, charIndex + 1);
+                    charIndex++;
+                    speed = 150; 
+                }
+
+                if (!isDeleting && charIndex === currentRole.length) {
+                    speed = 2000; // Pause after typing
+                    isDeleting = true;
+                }
+
+                if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    speed = 500; // Delay before starting next word
+                }
+
+                setTimeout(typeEffect, speed);
+            }
+
+            // 4. Contact Form Submission 
+            const contactForm = document.getElementById('contact-form');
+            const contactContainer = contactForm.parentNode; // The .container div
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const nameInput = document.getElementById('name').value;
+
+                // Create and style the message box element
+                const messageBox = document.createElement('div');
+                messageBox.textContent = 'Thank you for your message, ' + nameInput + '! I will be in touch shortly.';
+                messageBox.className = 'message-box';
+                
+                // Custom alert replacement: remove existing message and insert the new one
+                const existingMessage = contactContainer.querySelector('.message-box');
+                if(existingMessage) {
+                    existingMessage.remove();
+                }
+                // Insert the success message right after the form
+                contactContainer.insertBefore(messageBox, contactForm.nextSibling);
+
+                // Clear the form fields
+                contactForm.reset();
+            });
+
+            window.addEventListener('load', typeEffect);
+
+        })(); 
+    </script>
+</body>
+</html>
